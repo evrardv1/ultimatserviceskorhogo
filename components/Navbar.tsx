@@ -13,7 +13,7 @@ const Navbar: React.FC<NavbarProps> = ({ setView }) => {
       <div className="container mx-auto px-6 py-4 flex justify-between items-center">
         <div className="flex items-center gap-3 cursor-pointer group" onClick={() => setView('home')}>
           <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center p-1 shadow-sm group-hover:scale-105 transition-transform">
-             <img src={logoUrl} alt="Logo Ultimat" className="w-full h-full object-contain" />
+             <img src={logoUrl} alt="Logo Ultimat" className="w-full h-full object-contain" loading="lazy" />
           </div>
           <div className="flex flex-col">
             <h1 className="text-lg md:text-2xl font-bold tracking-tight leading-none">ULTIMAT SERVICES</h1>

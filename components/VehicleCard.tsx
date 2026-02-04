@@ -13,7 +13,12 @@ const VehicleCard: React.FC<VehicleCardProps> = ({ v, type }) => {
   return (
     <div className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-shadow border border-gray-100">
       <div className="h-48 overflow-hidden bg-gray-200">
-        <img src={v.image} alt={v.name} className="w-full h-full object-cover" />
+        <img 
+          src={v.image} 
+          alt={v.name} 
+          className="w-full h-full object-cover" 
+          loading="lazy" 
+        />
       </div>
       
       <div className="p-6">

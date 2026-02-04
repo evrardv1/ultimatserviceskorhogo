@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 const PROJECTS = [
@@ -28,6 +27,7 @@ const Portfolio: React.FC = () => {
                   src={project.image} 
                   alt={project.title}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
                   <span className="text-indigo-400 text-sm font-bold uppercase mb-2">{project.category}</span>

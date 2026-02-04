@@ -13,6 +13,7 @@ const Hero: React.FC<HeroProps> = ({ setView }) => {
           src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&q=80&w=2000" 
           alt="Background" 
           className="w-full h-full object-cover opacity-40"
+          loading="lazy"
         />
       </div>
       
