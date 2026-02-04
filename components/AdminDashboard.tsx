@@ -20,7 +20,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ vehicles, onBack, onAdd
     category: 'rent', 
     price: 0, 
     image: '',
-    specs: { engine: '', seats: 5, transmission: 'Auto' },
+    specs: { engine: 'Standard', seats: 5, transmission: 'Auto' },
     status: 'available'
   };
 
@@ -56,25 +56,33 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ vehicles, onBack, onAdd
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Ensure specs structure exists
+    if (!formData.name || !formData.image) {
+      alert("Veuillez remplir les champs obligatoires (Nom et Image)");
+      return;
+    }
+
     const currentSpecs = formData.specs || { engine: 'Standard', seats: 5, transmission: 'Auto' };
 
+    const vehicleData: Vehicle = {
+      id: editingId || Date.now().toString(),
+      name: formData.name || 'Modèle Inconnu',
+      type: formData.type || 'pickup',
+      category: formData.category || 'rent',
+      price: formData.price || 0,
+      image: formData.image || '',
+      gallery: formData.gallery || [formData.image || ''],
+      specs: {
+        engine: currentSpecs.engine || 'Standard',
+        seats: currentSpecs.seats || 5,
+        transmission: currentSpecs.transmission || 'Auto'
+      },
+      status: formData.status || 'available'
+    };
+
     if (editingId) {
-      const updatedVehicle = { 
-        ...formData, 
-        id: editingId,
-        specs: currentSpecs
-      } as Vehicle;
-      onUpdate(updatedVehicle);
+      onUpdate(vehicleData);
     } else {
-      const newVehicle = {
-        ...formData,
-        id: Date.now().toString(),
-        status: formData.status || 'available',
-        gallery: [formData.image || ''],
-        specs: currentSpecs
-      } as Vehicle;
-      onAdd(newVehicle);
+      onAdd(vehicleData);
     }
     handleCancel();
   };
@@ -197,7 +205,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ vehicles, onBack, onAdd
                 <input 
                   type="number" className="w-full border p-2 rounded focus:ring-2 focus:ring-blue-500 outline-none"
                   value={formData.specs?.seats} 
-                  onChange={e => setFormData({...formData, specs: { ...formData.specs!, seats: parseInt(e.target.value) }})}
+                  onChange={e => setFormData({...formData, specs: { ...formData.specs!, seats: parseInt(e.target.value) || 5 }})}
                 />
               </div>
 
