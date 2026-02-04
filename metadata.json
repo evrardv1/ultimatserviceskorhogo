@@ -1,0 +1,7 @@
+{
+  "name": "ULTIMAT SERVICES : Mobilité Automobile Korhogo",
+  "description": "Le leader de la location de 4x4 et de la vente de véhicules à Korhogo. Vivez l'expérience ULTIMAT SERVICES S.A.R.L..",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
