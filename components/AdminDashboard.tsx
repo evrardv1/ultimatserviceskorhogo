@@ -178,12 +178,11 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ vehicles, onBack, onAdd
                 />
               </div>
 
-              {/* Specs Section */}
               <div className="space-y-2">
                 <label className="text-sm font-bold text-gray-700">Moteur</label>
                 <input 
                   placeholder="Ex: V6 3.0L" className="w-full border p-2 rounded focus:ring-2 focus:ring-blue-500 outline-none"
-                  value={formData.specs?.engine} 
+                  value={formData.specs?.engine || ''} 
                   onChange={e => setFormData({...formData, specs: { ...formData.specs!, engine: e.target.value }})}
                 />
               </div>
@@ -192,7 +191,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ vehicles, onBack, onAdd
                 <label className="text-sm font-bold text-gray-700">Transmission</label>
                 <select 
                   className="w-full border p-2 rounded focus:ring-2 focus:ring-blue-500 outline-none"
-                  value={formData.specs?.transmission} 
+                  value={formData.specs?.transmission || 'Auto'} 
                   onChange={e => setFormData({...formData, specs: { ...formData.specs!, transmission: e.target.value as any }})}
                 >
                   <option value="Auto">Automatique</option>
@@ -204,7 +203,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ vehicles, onBack, onAdd
                 <label className="text-sm font-bold text-gray-700">Places</label>
                 <input 
                   type="number" className="w-full border p-2 rounded focus:ring-2 focus:ring-blue-500 outline-none"
-                  value={formData.specs?.seats} 
+                  value={formData.specs?.seats || 5} 
                   onChange={e => setFormData({...formData, specs: { ...formData.specs!, seats: parseInt(e.target.value) || 5 }})}
                 />
               </div>
