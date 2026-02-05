@@ -1,6 +1,5 @@
 import { GoogleGenAI, Type } from "@google/genai";
 
-// Initialize the GoogleGenAI client with the API key from environment variables.
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 export const generateMarketingContent = async (
@@ -21,7 +20,6 @@ export const generateMarketingContent = async (
     3. Utilise un langage moderne qui inspire confiance et excellence.
     `;
 
-    // Fixed: Call generateContent directly on ai.models as per guidelines.
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
       contents: prompt,
@@ -30,7 +28,6 @@ export const generateMarketingContent = async (
       },
     });
 
-    // Fixed: Access the .text property directly (not a method).
     return response.text?.trim() || "Désolé, je n'ai pas pu générer de contenu pour le moment.";
   } catch (error) {
     console.error("Gemini API Error:", error);
@@ -52,7 +49,6 @@ export const generateServicesContent = async (): Promise<any[]> => {
     - Les descriptions doivent faire moins de 25 mots.
     - Les boutons (btn) doivent être incitatifs (Call to Action).`;
 
-    // Fixed: Added propertyOrdering to the responseSchema for better model consistency.
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
       contents: prompt,
@@ -68,14 +64,12 @@ export const generateServicesContent = async (): Promise<any[]> => {
               description: { type: Type.STRING },
               btn: { type: Type.STRING }
             },
-            required: ["id", "title", "description", "btn"],
-            propertyOrdering: ["id", "title", "description", "btn"]
+            required: ["id", "title", "description", "btn"]
           }
         }
       }
     });
 
-    // Fixed: Direct access to response.text as a property.
     const text = response.text || "[]";
     return JSON.parse(text);
   } catch (error) {

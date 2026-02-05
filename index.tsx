@@ -1,14 +1,7 @@
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import { injectSpeedInsights } from '@vercel/speed-insights';
-
-// Initialisation de Vercel Speed Insights avec le bon nom d'export
-try {
-  injectSpeedInsights();
-} catch (e) {
-  console.warn("Speed Insights injection failed", e);
-}
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {

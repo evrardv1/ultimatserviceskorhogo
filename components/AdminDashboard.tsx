@@ -20,7 +20,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ vehicles, onBack, onAdd
     category: 'rent', 
     price: 0, 
     image: '',
-    specs: { engine: 'Standard', seats: 5, transmission: 'Auto' },
+    specs: { engine: '', seats: 5, transmission: 'Auto' },
     status: 'available'
   };
 
@@ -56,33 +56,25 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ vehicles, onBack, onAdd
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.name || !formData.image) {
-      alert("Veuillez remplir les champs obligatoires (Nom et Image)");
-      return;
-    }
-
+    // Ensure specs structure exists
     const currentSpecs = formData.specs || { engine: 'Standard', seats: 5, transmission: 'Auto' };
 
-    const vehicleData: Vehicle = {
-      id: editingId || Date.now().toString(),
-      name: formData.name || 'Modèle Inconnu',
-      type: formData.type || 'pickup',
-      category: formData.category || 'rent',
-      price: formData.price || 0,
-      image: formData.image || '',
-      gallery: formData.gallery || [formData.image || ''],
-      specs: {
-        engine: currentSpecs.engine || 'Standard',
-        seats: currentSpecs.seats || 5,
-        transmission: currentSpecs.transmission || 'Auto'
-      },
-      status: formData.status || 'available'
-    };
-
     if (editingId) {
-      onUpdate(vehicleData);
+      const updatedVehicle = { 
+        ...formData, 
+        id: editingId,
+        specs: currentSpecs
+      } as Vehicle;
+      onUpdate(updatedVehicle);
     } else {
-      onAdd(vehicleData);
+      const newVehicle = {
+        ...formData,
+        id: Date.now().toString(),
+        status: formData.status || 'available',
+        gallery: [formData.image || ''],
+        specs: currentSpecs
+      } as Vehicle;
+      onAdd(newVehicle);
     }
     handleCancel();
   };
@@ -178,11 +170,12 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ vehicles, onBack, onAdd
                 />
               </div>
 
+              {/* Specs Section */}
               <div className="space-y-2">
                 <label className="text-sm font-bold text-gray-700">Moteur</label>
                 <input 
                   placeholder="Ex: V6 3.0L" className="w-full border p-2 rounded focus:ring-2 focus:ring-blue-500 outline-none"
-                  value={formData.specs?.engine || ''} 
+                  value={formData.specs?.engine} 
                   onChange={e => setFormData({...formData, specs: { ...formData.specs!, engine: e.target.value }})}
                 />
               </div>
@@ -191,7 +184,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ vehicles, onBack, onAdd
                 <label className="text-sm font-bold text-gray-700">Transmission</label>
                 <select 
                   className="w-full border p-2 rounded focus:ring-2 focus:ring-blue-500 outline-none"
-                  value={formData.specs?.transmission || 'Auto'} 
+                  value={formData.specs?.transmission} 
                   onChange={e => setFormData({...formData, specs: { ...formData.specs!, transmission: e.target.value as any }})}
                 >
                   <option value="Auto">Automatique</option>
@@ -203,8 +196,8 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ vehicles, onBack, onAdd
                 <label className="text-sm font-bold text-gray-700">Places</label>
                 <input 
                   type="number" className="w-full border p-2 rounded focus:ring-2 focus:ring-blue-500 outline-none"
-                  value={formData.specs?.seats || 5} 
-                  onChange={e => setFormData({...formData, specs: { ...formData.specs!, seats: parseInt(e.target.value) || 5 }})}
+                  value={formData.specs?.seats} 
+                  onChange={e => setFormData({...formData, specs: { ...formData.specs!, seats: parseInt(e.target.value) }})}
                 />
               </div>
 
