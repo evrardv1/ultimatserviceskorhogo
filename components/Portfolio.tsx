@@ -1,38 +1,41 @@
 import React from 'react';
 
-const PROJECTS = [
-  { title: "Maison Design", category: "Architecture", image: "https://picsum.photos/600/400?1" },
-  { title: "Eco-Friendly App", category: "Mobile Development", image: "https://picsum.photos/600/400?2" },
-  { title: "Modern Brand", category: "Identity", image: "https://picsum.photos/600/400?3" },
-  { title: "Cloud Services", category: "SaaS", image: "https://picsum.photos/600/400?4" },
+const FLEET_MOMENTS = [
+  { title: "Mission Humanitaire", category: "Location ONG", image: "https://images.unsplash.com/photo-1542362567-b07e54358753?auto=format&fit=crop&q=80&w=800" },
+  { title: "Convoi Officiel", category: "Escorte & Sécurité", image: "https://images.unsplash.com/photo-1590333746434-582875f54c30?auto=format&fit=crop&q=80&w=800" },
+  { title: "Exploration Minière", category: "Logistique Terrain", image: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=800" },
+  { title: "Transport VIP", category: "Berlines Premium", image: "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&q=80&w=800" },
 ];
 
 const Portfolio: React.FC = () => {
   return (
-    <section id="portfolio" className="py-24 bg-white">
+    <section id="portfolio" className="py-32 bg-slate-900 text-white">
       <div className="container mx-auto px-6">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
           <div className="max-w-xl">
-            <h2 className="text-indigo-600 font-bold tracking-widest text-sm uppercase mb-3">Portfolio</h2>
-            <h3 className="text-4xl font-serif font-bold text-slate-900">Découvrez nos projets récents</h3>
+            <h2 className="text-red-500 font-black tracking-[0.4em] text-xs uppercase mb-4">Notre Expertise en Action</h2>
+            <h3 className="text-4xl md:text-6xl font-black uppercase italic tracking-tighter leading-none">
+              LA FLOTTE <span className="text-white/30 italic">OPÉRATIONNELLE</span>
+            </h3>
           </div>
-          <button className="text-indigo-600 font-bold hover:underline">Voir tous les projets &rarr;</button>
+          <p className="text-slate-400 font-medium max-w-xs text-sm border-l border-white/20 pl-6">
+            Aperçu de nos véhicules déployés sur les terrains les plus exigeants de Côte d'Ivoire.
+          </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 gap-8">
-          {PROJECTS.map((project, idx) => (
-            <div key={idx} className="group cursor-pointer">
-              <div className="relative overflow-hidden rounded-3xl aspect-[4/3]">
-                <img 
-                  src={project.image} 
-                  alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
-                  <span className="text-indigo-400 text-sm font-bold uppercase mb-2">{project.category}</span>
-                  <h4 className="text-white text-2xl font-bold">{project.title}</h4>
-                </div>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {FLEET_MOMENTS.map((item, idx) => (
+            <div key={idx} className="group relative overflow-hidden rounded-[2rem] aspect-[3/4] cursor-pointer shadow-2xl">
+              <img 
+                src={item.image} 
+                alt={item.title}
+                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 grayscale hover:grayscale-0"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent opacity-60"></div>
+              <div className="absolute bottom-8 left-8 right-8">
+                <span className="text-red-500 text-[10px] font-black uppercase tracking-widest mb-2 block">{item.category}</span>
+                <h4 className="text-xl font-black uppercase italic leading-tight">{item.title}</h4>
               </div>
             </div>
           ))}

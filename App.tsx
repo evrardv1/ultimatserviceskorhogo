@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { ViewState, Vehicle } from './types';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -10,6 +10,7 @@ import VehicleMarket from './components/VehicleMarket';
 import AdminDashboard from './components/AdminDashboard';
 import FeaturedVehicles from './components/FeaturedVehicles';
 import WhatsAppBubble from './components/WhatsAppBubble';
+import Portfolio from './components/Portfolio';
 
 const INITIAL_VEHICLES: Vehicle[] = [
   {
@@ -19,9 +20,6 @@ const INITIAL_VEHICLES: Vehicle[] = [
     category: 'rent',
     price: 35000,
     image: 'https://image2url.com/r2/default/images/1770215615305-449207ce-bce4-4ca3-9786-877a6845894a.jpeg',
-    gallery: [
-      'https://image2url.com/r2/default/images/1770215615305-449207ce-bce4-4ca3-9786-877a6845894a.jpeg'
-    ],
     specs: { engine: 'V6 3.5L', seats: 5, transmission: 'Auto' },
     status: 'available'
   },
@@ -32,9 +30,6 @@ const INITIAL_VEHICLES: Vehicle[] = [
     category: 'rent',
     price: 40000,
     image: 'https://image2url.com/r2/default/images/1770219037697-1f836c92-ab61-4517-8913-969df56a5966.jpeg',
-    gallery: [
-      'https://image2url.com/r2/default/images/1770219037697-1f836c92-ab61-4517-8913-969df56a5966.jpeg'
-    ],
     specs: { engine: 'V6 4.5L', seats: 7, transmission: 'Auto' },
     status: 'available'
   },
@@ -45,35 +40,26 @@ const INITIAL_VEHICLES: Vehicle[] = [
     category: 'rent',
     price: 35000,
     image: 'https://image2url.com/r2/default/images/1770219069876-a08c3081-741b-4ff9-8986-e7db06c3e375.jpeg',
-    gallery: [
-      'https://image2url.com/r2/default/images/1770219069876-a08c3081-741b-4ff9-8986-e7db06c3e375.jpeg'
-    ],
     specs: { engine: 'V6 3.5L', seats: 5, transmission: 'Auto' },
     status: 'available'
   },
   {
     id: 'renault-premium-1',
-    name: 'Renault Premium',
-    type: 'pickup', // Utilisé comme catégorie utilitaire/camion
+    name: 'Renault Premium Heavy',
+    type: 'pickup',
     category: 'rent',
     price: 100000,
     image: 'https://image2url.com/r2/default/images/1770219134052-2b64a911-bc00-4e9f-906c-2db2b9d633af.jpeg',
-    gallery: [
-      'https://image2url.com/r2/default/images/1770219134052-2b64a911-bc00-4e9f-906c-2db2b9d633af.jpeg'
-    ],
     specs: { engine: 'Diesel Heavy', seats: 2, transmission: 'Manuelle' },
     status: 'available'
   },
   {
     id: 'hilux-1',
-    name: 'Toyota Hilux Ultimat Edition',
+    name: 'Toyota Hilux Ultimat',
     type: 'pickup',
     category: 'rent',
     price: 75000,
     image: 'https://images.unsplash.com/photo-1590333746434-582875f54c30?auto=format&fit=crop&q=80&w=2000',
-    gallery: [
-      'https://images.unsplash.com/photo-1590333746434-582875f54c30?auto=format&fit=crop&q=80&w=2000'
-    ],
     specs: { engine: 'D-4D Turbo', seats: 5, transmission: 'Manuelle' },
     status: 'available'
   }
@@ -83,33 +69,24 @@ const App: React.FC = () => {
   const [view, setView] = useState<ViewState>('home');
   const [vehicles, setVehicles] = useState<Vehicle[]>(INITIAL_VEHICLES);
 
-  const handleAddVehicle = (newVehicle: Vehicle) => {
-    setVehicles([...vehicles, newVehicle]);
-    setView('admin');
-  };
-
-  const handleDeleteVehicle = (id: string) => {
-    setVehicles(vehicles.filter(v => v.id !== id));
-  };
-
-  const handleUpdateVehicle = (updatedVehicle: Vehicle) => {
-    setVehicles(vehicles.map(v => v.id === updatedVehicle.id ? updatedVehicle : v));
-    setView('admin');
-  };
+  const handleAddVehicle = (v: Vehicle) => setVehicles([...vehicles, v]);
+  const handleDeleteVehicle = (id: string) => setVehicles(vehicles.filter(v => v.id !== id));
+  const handleUpdateVehicle = (v: Vehicle) => setVehicles(vehicles.map(curr => curr.id === v.id ? v : curr));
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen">
       {view !== 'admin' && <Navbar setView={setView} />}
       
       <main>
         {view === 'home' && (
-          <>
+          <div className="animate-fade-in">
             <Hero setView={setView} />
             <FeaturedVehicles vehicles={vehicles} setView={setView} />
             <Services setView={setView} />
+            <Portfolio />
             <Testimonials />
             <Contact />
-          </>
+          </div>
         )}
 
         {view === 'rent' && (
@@ -133,6 +110,11 @@ const App: React.FC = () => {
 
       {view !== 'admin' && <Footer setView={setView} />}
       {view !== 'admin' && <WhatsAppBubble />}
+
+      <style>{`
+        .animate-fade-in { animation: fadeIn 0.8s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+      `}</style>
     </div>
   );
 };
